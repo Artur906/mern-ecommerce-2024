@@ -3,6 +3,7 @@ import globals from 'globals'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import cypress from 'cypress'
 
 export default [
   { ignores: ['dist'] },
@@ -17,11 +18,13 @@ export default [
         sourceType: 'module',
       },
     },
+    env: { browser: true, node: true, 'cypress/globals': true },
     settings: { react: { version: '18.3' } },
     plugins: {
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      cypress
     },
     rules: {
       ...js.configs.recommended.rules,
