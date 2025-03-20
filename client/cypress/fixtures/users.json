@@ -1,0 +1,10 @@
+[
+  {
+    "email": "john.robot@personal.example.com", 
+    "password": "supersenha",
+    "paypal": {
+      "email": "john.robot@personal.example.com", 
+      "password": "9pRHP_ow"
+    }
+  }
+]
