@@ -1,10 +1,20 @@
-[
-  {
+{
+  "validUser": {
+    "username": "John Robot",
     "email": "john.robot@personal.example.com", 
     "password": "supersenha",
     "paypal": {
       "email": "john.robot@personal.example.com", 
       "password": "9pRHP_ow"
     }
+  }, 
+  "invalidUser": {
+    "username": "Not Real",
+    "email": "im.not.real@personal.example.com", 
+    "password": "senha falsa",
+    "paypal": {
+      "email": "im.not.real@personal.example.com", 
+      "password": "senha falsa"
+    }
   }
-]
+}

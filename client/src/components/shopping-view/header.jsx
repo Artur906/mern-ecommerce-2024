@@ -107,7 +107,7 @@ function HeaderRightContent() {
       </Sheet>
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild cy-test="user-menu-trigger">
           <Avatar className="bg-black">
             <AvatarFallback className="bg-black text-white font-extrabold">
               {user?.userName[0].toUpperCase()}
@@ -117,12 +117,12 @@ function HeaderRightContent() {
         <DropdownMenuContent side="right" className="w-56">
           <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
+          <DropdownMenuItem onClick={() => navigate("/shop/account")} cy-test="account-menu-item">
             <UserCog className="mr-2 h-4 w-4" />
             Account
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
+          <DropdownMenuItem onClick={handleLogout} cy-test="logout-menu-item">
             <LogOut className="mr-2 h-4 w-4" />
             Logout
           </DropdownMenuItem>

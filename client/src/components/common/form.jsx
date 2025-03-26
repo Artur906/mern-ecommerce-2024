@@ -27,6 +27,7 @@ function CommonForm({
         element = (
           <Input
             name={getControlItem.name}
+            cy-test={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
             type={getControlItem.type}
@@ -50,6 +51,7 @@ function CommonForm({
                 [getControlItem.name]: value,
               })
             }
+            cy-test={getControlItem.name}
             value={value}
           >
             <SelectTrigger className="w-full">
@@ -57,8 +59,8 @@ function CommonForm({
             </SelectTrigger>
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
-                ? getControlItem.options.map((optionItem) => (
-                    <SelectItem key={optionItem.id} value={optionItem.id}>
+                ? getControlItem.options.map((optionItem, index) => (
+                    <SelectItem key={optionItem.id} value={optionItem.id} cy-test={index}>
                       {optionItem.label}
                     </SelectItem>
                   ))
@@ -72,6 +74,7 @@ function CommonForm({
         element = (
           <Textarea
             name={getControlItem.name}
+            cy-test={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.id}
             value={value}
@@ -92,6 +95,7 @@ function CommonForm({
             name={getControlItem.name}
             placeholder={getControlItem.placeholder}
             id={getControlItem.name}
+            cy-test={getControlItem.name}
             type={getControlItem.type}
             value={value}
             onChange={(event) =>
@@ -118,7 +122,7 @@ function CommonForm({
           </div>
         ))}
       </div>
-      <Button disabled={isBtnDisabled} type="submit" className="mt-2 w-full">
+      <Button disabled={isBtnDisabled} type="submit" cy-test="submit" className="mt-2 w-full">
         {buttonText || "Submit"}
       </Button>
     </form>
