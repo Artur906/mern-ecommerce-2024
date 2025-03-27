@@ -9,8 +9,8 @@ function ShoppingProductTile({
   handleAddtoCart,
 }) {
   return (
-    <Card className="w-full max-w-sm mx-auto">
-      <div onClick={() => handleGetProductDetails(product?._id)}>
+    <Card className="w-full max-w-sm mx-auto" cy-test={`product-${product?._id}`}>
+      <div onClick={() => handleGetProductDetails(product?._id)} >
         <div className="relative">
           <img
             src={product?.image}

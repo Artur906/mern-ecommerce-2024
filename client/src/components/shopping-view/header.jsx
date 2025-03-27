@@ -89,6 +89,7 @@ function HeaderRightContent() {
           variant="outline"
           size="icon"
           className="relative"
+          cy-test="cart-sheet"
         >
           <ShoppingCart className="w-6 h-6" />
           <span className="absolute top-[-5px] right-[2px] font-bold text-sm">

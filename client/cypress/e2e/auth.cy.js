@@ -18,19 +18,19 @@ describe('auth spec', () => {
     cy.get('body').should('contain', `User doesn't exists! Please register first`)
   })
 
-  it('login succesfully', () => {
+  it.only('login succesfully', () => {
     const { email, password } = users['validUser']
 
     cy.visit('/')
 
     cy.login(email, password)
 
-    // it will trhow an error because the user is not authenticated
     cy.url().should('contain', 'shop/home')
+    cy.get('body').should('contain', 'Logged in successfully')
   })
 
 
-  it.only('should logout succesfully', () => {
+  it('should logout succesfully', () => {
     const { email, password } = users['validUser']
 
     cy.visit('/')
@@ -42,6 +42,4 @@ describe('auth spec', () => {
 
     cy.url().should('contain', 'auth/login')
   })
-
-
 })

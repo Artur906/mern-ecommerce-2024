@@ -1,5 +1,6 @@
 {
   "validUser": {
+    "userId": "67e335651d763efe40d267b4",
     "username": "John Robot",
     "email": "john.robot@personal.example.com", 
     "password": "supersenha",
