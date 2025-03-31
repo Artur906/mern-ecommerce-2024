@@ -4,6 +4,13 @@
     "username": "John Robot",
     "email": "john.robot@personal.example.com", 
     "password": "supersenha",
+    "address": {
+      "address": "1234 Elm St.",
+      "city": "Springfield",
+      "pincode": "123456",
+      "phone": "1234567890", 
+      "notes": "This is a note"
+    },
     "paypal": {
       "email": "john.robot@personal.example.com", 
       "password": "9pRHP_ow"

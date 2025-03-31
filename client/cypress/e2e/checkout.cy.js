@@ -15,14 +15,14 @@ describe('checkout spec', () => {
         const [product] = products
 
         const productId = product._id
-        
+
         cy.request('DELETE', `http://localhost:5000/api/shop/cart/${userId}/${productId}`)
       })
     })
   })
 
   it.only('should buy a product', () => {
-    const { email, password } = users['validUser']
+    const { email, password, address: {address, city, pincode, phone, notes}} = users['validUser']
     const [product] = products
     cy.visit('/')
 
@@ -38,6 +38,10 @@ describe('checkout spec', () => {
     cy.get('[cy-test="cart-sheet"]').should('contain', '1').click()
     cy.get('[cy-test="checkout-button"]').click()
 
-
+    cy.get('[cy-test="address"').click().type(address)
+    cy.get('[cy-test="city"').click().type(city)
+    cy.get('[cy-test="pincode"').click().type(pincode)
+    cy.get('[cy-test="phone"').click().type(phone)
+    cy.get('[cy-test="notes"').click().type(notes)
   })
 })

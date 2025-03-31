@@ -1,3 +1,6 @@
+import LoginPage from "../support/pageObjects/LoginPage"
+import HomePage from "../support/pageObjects/HomePage"
+
 describe('auth spec', () => {
   let users
 
@@ -12,18 +15,20 @@ describe('auth spec', () => {
 
     cy.visit('/')
 
-    cy.login(email, password)
-
-    // it will trhow an error because the user is not authenticated
-    cy.get('body').should('contain', `User doesn't exists! Please register first`)
+    LoginPage.fillEmail(email)
+    LoginPage.fillPassword(password)
+    LoginPage.submit()
+    LoginPage.checkLoginError()
   })
 
-  it.only('login succesfully', () => {
+  it('login succesfully', () => {
     const { email, password } = users['validUser']
 
-    cy.visit('/')
+    LoginPage.visit()
 
-    cy.login(email, password)
+    LoginPage.fillEmail(email)
+    LoginPage.fillPassword(password)
+    LoginPage.submit()
 
     cy.url().should('contain', 'shop/home')
     cy.get('body').should('contain', 'Logged in successfully')
@@ -33,12 +38,12 @@ describe('auth spec', () => {
   it('should logout succesfully', () => {
     const { email, password } = users['validUser']
 
-    cy.visit('/')
+    LoginPage.login(email, password)
+    cy.get('body').should('contain', 'Logged in successfully')
 
-    cy.login(email, password)
-
-    cy.get('[cy-test="user-menu-trigger"]').click()
-    cy.get('[cy-test="logout-menu-item"]').click()
+    HomePage
+      .clickUserMenu()
+      .clickLogout()
 
     cy.url().should('contain', 'auth/login')
   })
