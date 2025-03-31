@@ -11,6 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Instala pnpm globalmente
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
       # Configura Node.js com pnpm
       - name: Set up Node.js and pnpm
         uses: actions/setup-node@v3
@@ -18,9 +22,7 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      # Instala pnpm globalmente
-      - name: Install pnpm
-        run: npm install -g pnpm
+      
 
       # Backend
       - name: Install Backend Dependencies
