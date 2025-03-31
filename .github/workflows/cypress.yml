@@ -58,10 +58,8 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./client
-          start: npx cypress run
+          command: npx cypress run --record --parallel
           wait-on: 'http://localhost:5173'
-          record: true
-          parallel: true
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
