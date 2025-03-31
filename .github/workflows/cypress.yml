@@ -56,4 +56,4 @@ jobs:
       # Run Cypress tests
       - name: Cypress run
         working-directory: ./client # Adjust this path to your frontend folder
-        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} &
+        run: npx cypress run --record --browser electron --key ${{ secrets.CYPRESS_RECORD_KEY }} &
