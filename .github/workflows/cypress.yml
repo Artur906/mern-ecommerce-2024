@@ -55,11 +55,5 @@ jobs:
 
       # Run Cypress tests
       - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          working-directory: ./client
-          command: npx cypress run --record --parallel
-          wait-on: 'http://localhost:5173'
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./client # Adjust this path to your frontend folder
+        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} &
