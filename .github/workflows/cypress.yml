@@ -11,54 +11,58 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step to set up Node.js
-      - name: Set up Node.js
+      # Configura Node.js com pnpm
+      - name: Set up Node.js and pnpm
         uses: actions/setup-node@v3
         with:
-          node-version: 20 # Use the Node.js version your project requires
+          node-version: 20
+          cache: 'pnpm'
 
-      # Install dependencies for backend
+      # Instala pnpm globalmente
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Backend
       - name: Install Backend Dependencies
-        working-directory: ./server # Adjust this path to your backend folder
-        run: npm install
+        working-directory: ./server
+        run: pnpm install  # Alterado para pnpm
 
-      # Start the backend server
       - name: Start Backend
-        working-directory: ./server # Adjust this path to your backend folder
-        run: npm run dev &
+        working-directory: ./server
+        run: pnpm run dev &  # Alterado para pnpm
         env:
-          NODE_ENV: test # Set environment variables if needed
-          MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }} # Use secrets for sensitive data
-          PAYPA.L_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }} # Use secrets for sensitive data
-          PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }} # Use secrets for sensitive data
-          CLOUD_NAME: ${{ secrets.CLOUD_NAME }} # Use secrets for sensitive data
-          API_KEY: ${{ secrets.API_KEY }} # Use secrets for sensitive data
-          API_SECRET: ${{ secrets.API_SECRET }} # Use secrets for sensitive data
+          NODE_ENV: test
+          MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }}
+          PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+          PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }}
+          CLOUD_NAME: ${{ secrets.CLOUD_NAME }}
+          API_KEY: ${{ secrets.API_KEY }}
+          API_SECRET: ${{ secrets.API_SECRET }}
 
-      # Install dependencies for frontend
+      # Frontend
       - name: Install Frontend Dependencies
-        working-directory: ./client # Adjust this path to your frontend folder
-        run: npm install
+        working-directory: ./client
+        run: pnpm install  # Alterado para pnpm
 
-      # Start the frontend server
       - name: Start Frontend
-        working-directory: ./client # Adjust this path to your frontend folder
-        run: npm run dev &
+        working-directory: ./client
+        run: pnpm run dev &  # Alterado para pnpm
         env:
-          NODE_ENV: test # Set environment variables if needed
-          VITE_API_URL: http://localhost:5000 # Adjust this URL to match your backend server
+          NODE_ENV: test
+          VITE_API_URL: http://localhost:5000
 
+      # Espera pelos servidores
+      - name: Wait for Servers
+        run: |
+          npx wait-on http://localhost:5000
+          npx wait-on http://localhost:5173
 
-      # # Wait for both servers to be ready
-      # - name: Wait for Servers
-      #   run: npx wait-on http://localhost:5000 http://localhost:5173 # Adjust ports as needed
-
-      # Run Cypress tests
+      # Cypress
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./client
-          start: npm run test
+          start: pnpm run test  # Alterado para pnpm
           wait-on: 'http://localhost:5173'
           record: true
           parallel: true
