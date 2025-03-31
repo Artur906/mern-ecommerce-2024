@@ -57,7 +57,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: ./client
-          command: npx cypress run --record --parallel --ci-build-id ${{ github.run_id }}
+          command: npx cypress run --record --ci-build-id ${{ github.run_id }}
           record: true
           parallel: true
         env:
