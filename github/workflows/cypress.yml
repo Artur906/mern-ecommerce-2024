@@ -1,0 +1,65 @@
+name: Cypress Tests
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step to set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # Use the Node.js version your project requires
+
+      # Install dependencies for backend
+      - name: Install Backend Dependencies
+        working-directory: ./server # Adjust this path to your backend folder
+        run: npm install
+
+      # Start the backend server
+      - name: Start Backend
+        working-directory: ./server # Adjust this path to your backend folder
+        run: npm start &
+        env:
+          NODE_ENV: test # Set environment variables if needed
+          MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }} # Use secrets for sensitive data
+          PAYPA.L_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }} # Use secrets for sensitive data
+          PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }} # Use secrets for sensitive data
+          CLOUD_NAME: ${{ secrets.CLOUD_NAME }} # Use secrets for sensitive data
+          API_KEY: ${{ secrets.API_KEY }} # Use secrets for sensitive data
+          API_SECRET: ${{ secrets.API_SECRET }} # Use secrets for sensitive data
+
+      # Install dependencies for frontend
+      - name: Install Frontend Dependencies
+        working-directory: ./client # Adjust this path to your frontend folder
+        run: npm install
+
+      # Start the frontend server
+      - name: Start Frontend
+        working-directory: ./client # Adjust this path to your frontend folder
+        run: npm start &
+        env:
+          NODE_ENV: test # Set environment variables if needed
+          VITE_API_URL: http://localhost:5000 # Adjust this URL to match your backend server
+
+      # Wait for both servers to be ready
+      - name: Wait for Servers
+        run: npx wait-on http://localhost:5000 http://localhost:5173 # Adjust ports as needed
+
+      # Run Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: 'http://localhost:3000'
+          record: true
+          parallel: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
