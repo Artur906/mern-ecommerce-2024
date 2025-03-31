@@ -43,16 +43,11 @@ jobs:
       # Start the frontend server
       - name: Start Frontend
         working-directory: ./client # Adjust this path to your frontend folder
-        run: npm run dev &
+        run: npm run dev --host &
         env:
           NODE_ENV: test # Set environment variables if needed
           VITE_API_URL: http://localhost:5000 # Adjust this URL to match your backend server
 
-      - name: Debug Backend
-        run: curl -v http://localhost:5000
-        
-      - name: Debug Frontend
-        run: curl -v http://localhost:5173
 
       # Wait for both servers to be ready
       - name: Wait for Servers
