@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import { HomePage, LoginPage, CheckoutPage } from "../support/pageObjects"
 
 describe('checkout spec', () => {
   let users
@@ -24,24 +25,29 @@ describe('checkout spec', () => {
   it.only('should buy a product', () => {
     const { email, password, address: {address, city, pincode, phone, notes}} = users['validUser']
     const [product] = products
-    cy.visit('/')
+    cy.visit('/');
 
-    cy.login(email, password)
+    LoginPage.login(email, password)
 
-    cy.get(`[cy-test="product-${product._id}"]`).then(($product) => {
-      cy.get($product)
-        .should('contain', product.title)
-        .should('contain', product.salePrice)
+    // HomePage.getProduct(product._id).then(($product) => {
+    //   cy.get($product)
+    //     .should('contain', product.title)
+    //     .should('contain', product.salePrice)
 
-    }).find('button').click()
+    // }).find('button').click()
 
-    cy.get('[cy-test="cart-sheet"]').should('contain', '1').click()
-    cy.get('[cy-test="checkout-button"]').click()
+    HomePage.getProduct(product._id)
+      .should('contain', product.title)
+      .should('contain', product.salePrice)
+      .find('button').click()
 
-    cy.get('[cy-test="address"').click().type(address)
-    cy.get('[cy-test="city"').click().type(city)
-    cy.get('[cy-test="pincode"').click().type(pincode)
-    cy.get('[cy-test="phone"').click().type(phone)
-    cy.get('[cy-test="notes"').click().type(notes)
+    HomePage.getCartSheet().should('contain', '1').click()
+
+    HomePage.clickCheckoutButton()
+
+    cy.url().should('contain', 'checkout')
+
+    CheckoutPage.fillAdressForm(address, city, pincode, phone, notes)
+    CheckoutPage.clickAddAddressButton()
   })
 })

@@ -1,5 +1,4 @@
-import LoginPage from "../support/pageObjects/LoginPage"
-import HomePage from "../support/pageObjects/HomePage"
+import { HomePage, LoginPage } from "../support/pageObjects"
 
 describe('auth spec', () => {
   let users
